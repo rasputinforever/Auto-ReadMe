@@ -201,3 +201,44 @@ function createReadMe() {
       err ? console.error(err) : console.log('You actuall did it!')
     );
 }
+
+function createReadMe() {
+    
+    const readMeTitle = `# ${readMeObj.title}`
+    const readMeIntro = `${readMeObj.introText}`
+
+    let readMeArr = [readMeTitle, readMeIntro];
+
+    //get sections here
+    readMeObj.sections.forEach(section => {
+        readMeArr = [...readMeArr, `## ${section.secName}`];
+
+        section.secBody.forEach(bodyEl => {
+            
+            switch (bodyEl.type) {
+                case 'text':
+                    readMeArr = [...readMeArr, `${bodyEl.contents}`];
+                    break;
+                case 'img':
+                    readMeArr = [...readMeArr, `![${bodyEl.contents}](${bodyEl.contents})`];
+                    break;
+                case 'link':
+                    readMeArr = [...readMeArr, `[${bodyEl.contents}](${bodyEl.contents})`];
+                    break;
+                case 'bullet':
+                    readMeArr = [...readMeArr, `* ${bodyEl.contents}`];
+                    break;
+                default:
+                    return;
+            }
+        })
+    })
+
+    let readMeStr = readMeArr.join(`
+`);
+
+    fs.writeFile('README.md', readMeStr, (err) =>
+        err ? console.error(err) : console.log('README.md successfully created!')
+    );
+    
+}
