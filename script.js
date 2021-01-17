@@ -78,45 +78,103 @@ function sectionLooper() {
     //blank template for sections
     let newSec = {
         secName: '',
-        secText: '',
-        secImgs: [],
-        secLinks: []
+        secBody: ''
     }
     //get info for each input
-    inquirer.prompt(
-        [ {
-            name: 'secTitle',
-            type: 'input',
-            message: 'Please enter a name for this section:'
-        },
-        {
-            name: 'secText',
-            type: 'input',
-            message: 'Please enter the text of this section:'
-        },
-        {
-            name: "loopCheck",
-            type: "confirm",
-            message: "Would you like to add more sections?"
-    }]        
-       ).then((response) => {
+    inquirer
+        .prompt(
+            {
+                name: "newSecTitle",
+                type: "input",
+                message: "Section Title:"
+            }   
+        )
+       .then((response) => {
             //build section object, then push it to sections array
             newSec = {
                 secName: response.secTitle,
-                secText: response.secText,
-                secImgs: [],
-                secLinks: []
+                secBody: ''
             }
-            readMeObj.sections.push(newSec) 
-            //exits loop
-            if (response.loopCheck) {
-                sectionLooper();
-            } else {
-            console.log(readMeObj);
-            createReadMe();
-            }
+            readMeObj.sections.push(newSec);
+            sectionEditor(newSec);
          })
 }
+
+function sectionEditor (newSec) {
+    inquirer
+        .prompt(
+            {
+                name: "newSecItem",
+                type: "list",
+                message: "Now, let's add something to this section:",
+                choices: ["Text", "Image", "Link", "Bullet", "Create a New Section", "Quit Making Sections..."]
+            }    
+        )
+       .then((response) => {
+            switch(response.newSecItem) {
+                case 'Text':
+                    inquirer.prompt(
+                        {
+                            name: 'newSecText',
+                            type: 'input',
+                            message: 'Text Here:'
+                        }
+                    ).then((response) => {
+                        newSec.secBody =+ response.newSecText + `\n`
+                        sectionEditor(newSec);
+                    });
+                    break;
+
+                case 'Image':
+                    inquirer.prompt(
+                        {
+                            name: 'newSecImg',
+                            type: 'input',
+                            message: 'Text Here:'
+                        }
+                    ).then((response) => {
+                        newSec.secBody =+ response.newSecImg + `\n`
+                        sectionEditor(newSec);
+                    });
+                    break;
+
+                case 'Link':
+                    inquirer.prompt(
+                        {
+                            name: 'newSecLink',
+                            type: 'input',
+                            message: 'Text Here:'
+                        }
+                    ).then((response) => {
+                        newSec.secBody =+ response.newSecLink + `\n`
+                        sectionEditor(newSec);
+                    });
+                    break;
+
+                case 'Bullet':
+                    inquirer.prompt(
+                        {
+                            name: 'newSecBullet',
+                            type: 'input',
+                            message: 'Text Here:'
+                        }
+                    ).then((response) => {
+                        newSec.secBody =+ response.newSecBullet + `\n`
+                        sectionEditor(newSec);
+                    });
+                    break;
+
+                case 'Create a New Section':
+                    readMeObj.sections.push(newSec)
+                    sectionLooper();
+                    break;
+                default:
+                    console.log(readMeObj)
+                    return;
+              } 
+         })
+}
+
 
 function editReadMe() {
     console.log("Hello!")
