@@ -34,16 +34,16 @@ let readMeObj = {
     sections: [],
 };
 
-
 inquirer
     .prompt({
         name: "function",
         type: "list",
-        message: "Welcome to Auto-ReadMe! What would you like to do?",
+        message: "Welcome to Auto-ReadMe! This tool helps build or edit a README.md file by walking through each section and section element in your README! What would you like to do?",
         choices: ["Create New README.md", "Edit existing README.md"],
     })
     .then((response) => {
         if (response.function === "Create New README.md") {
+            console.log("Initiating NEW README...")
             newReadMe();
         } else {
             editReadMe();
@@ -62,7 +62,7 @@ function newReadMe() {
         {
             name: 'introText',
             type: 'input',
-            message: 'Please enter your Introduction:'
+            message: 'Please enter your Introductory Text:'
         },
     ])
     .then((response) => {
@@ -116,6 +116,9 @@ function sectionEditor (newSec) {
         )
        .then((response) => {
             switch(response.newSecItem) {
+
+                //this can be consolidated into 3 cases, use variables for the four "types"
+                
                 case 'Text':
                     inquirer.prompt(
                         {
@@ -189,10 +192,11 @@ function sectionEditor (newSec) {
 
 
 function editReadMe() {
-    console.log("Hello!")
+    console.log("Under Construction!")
 }
 
 function createReadMe() {
+    console.log(readMeObj);
     fs.writeFile('README.md', JSON.stringify(readMeObj), (err) =>
       err ? console.error(err) : console.log('You actuall did it!')
     );

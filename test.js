@@ -1,29 +1,66 @@
+const fs = require('fs');
 
-const inquirer = require('inquirer');
-
-const collectInputs = async (inputs = []) => {
-  const prompts = [
-    {
-      type: 'input',
-      name: 'inputValue',
-      message: 'Enter some input: '
+let readMeObj = {
+    title: 'My Demo Project',
+    introText: 'some demonstratoin object',
+    sections: [{
+        secName: 'section 1',
+        secBody: [{
+            type: 'text',
+            contents: 'Here is some test text'
+        },
+        {
+            type: 'img',
+            contents: 'test.PNG'
+        },
+        {
+            type: 'link',
+            contents: 'link.com'
+        },
+        {
+            type: 'bullet',
+            contents: 'some point'
+        }]
     },
     {
-      type: 'confirm',
-      name: 'again',
-      message: 'Enter another input? ',
-      default: true
-    }
-  ];
-
-  const { again, ...answers } = await inquirer.prompt(prompts);
-  const newInputs = [...inputs, answers];
-  return again ? collectInputs(newInputs) : newInputs;
+        secName: 'section 2',
+        secBody:[{
+            type: 'text',
+            contents: 'Here is some test text'
+        },
+        {
+            type: 'img',
+            contents: 'test.PNG'
+        },
+        {
+            type: 'link',
+            contents: 'link.com'
+        },
+        {
+            type: 'bullet',
+            contents: 'some point'
+        }]
+    }],
 };
 
-const main = async () => {
-  const inputs = await collectInputs();
-  console.log(inputs);
-};
+function createReadMe() {
+    
+    const readMeTitle = `# ${readMeObj.title}`
+    const readMeIntro = `${readMeObj.introText}`
 
-main();
+    let readMeArr = [readMeTitle, readMeIntro];
+
+
+
+    readMeArr.forEach(sec => {
+        
+        
+        fs.appendFile('README.md', `${sec}  `, (err) => {
+            if (err) throw err;
+            console.log('The "data to append" was appended to file!');
+          });
+        });
+    
+}
+
+createReadMe();
