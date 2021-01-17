@@ -64,60 +64,57 @@ function newReadMe() {
             type: 'input',
             message: 'Please enter your Introduction:'
         },
-        {
-            name: 'initSecTitle',
-            type: 'input',
-            message: 'Please enter the name of your first section:'
-        },
-        {
-            name: 'initSecText',
-            type: 'input',
-            message: 'Please enter the text of your first section:'
-        },
     ])
     .then((response) => {
         readMeObj.title = response.title
         readMeObj.introText = response.introText
-        let initSection = {
-            secName: response.initSecTitle,
-            secText: response.initSecText,
-            secImgs: [],
-            secLinks: []
-        }
-        //build section object, then push it to sections array
-        readMeObj.sections.push(initSection)
-        sectionLooper(readMeObj);        
-        console.log(readMeObj);
+        sectionLooper();
     })
 }
 
+//creates an endless number of sections so long as user continues to say "yes"
 function sectionLooper() {
-    let loopCheck = true
-    do {
-        inquirer.prompt([
-            {
-                name: 'newSecTitle',
-                type: 'input',
-                message: 'Please enter the name of your first section:'
-            },
-            {
-                name: 'newSecText',
-                type: 'input',
-                message: 'Please enter the text of your first section:'
-            },
-        ])
-        .then((response) => {
-            let newSection = {
-                secName: response.newSecTitle,
-                secText: response.newSecText,
+    console.log(`Adding new Section...`)
+    //blank template for sections
+    let newSec = {
+        secName: '',
+        secText: '',
+        secImgs: [],
+        secLinks: []
+    }
+    //get info for each input
+    inquirer.prompt(
+        [ {
+            name: 'secTitle',
+            type: 'input',
+            message: 'Please enter a name for this section:'
+        },
+        {
+            name: 'secText',
+            type: 'input',
+            message: 'Please enter the text of this section:'
+        },
+        {
+            name: "loopCheck",
+            type: "confirm",
+            message: "Would you like to add more sections?"
+    }]        
+       ).then((response) => {
+        if (response.loopCheck) {
+            //build section object, then push it to sections array
+                       
+            newSec = {
+                secName: response.secTitle,
+                secText: response.secText,
                 secImgs: [],
                 secLinks: []
             }
-            //build section object, then push it to sections array
-            readMeObj.sections.push(newSection)
-        })
-        
-    } while (loopCheck);
+            readMeObj.sections.push(newSec) 
+            sectionLooper();
+        } else {
+           console.log(readMeObj)
+        }
+    })
 }
 
 function editReadMe() {
