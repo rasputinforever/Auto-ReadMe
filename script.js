@@ -92,8 +92,8 @@ function sectionLooper() {
        .then((response) => {
             //build section object, then push it to sections array
             newSec = {
-                secName: response.secTitle,
-                secBody: ''
+                secName: response.newSecTitle,
+                secBody: []
             }
             readMeObj.sections.push(newSec);
             sectionEditor(newSec);
@@ -101,6 +101,10 @@ function sectionLooper() {
 }
 
 function sectionEditor (newSec) {
+    let newBodyPart = {
+        type: '',
+        contents: ''
+    }
     inquirer
         .prompt(
             {
@@ -120,7 +124,9 @@ function sectionEditor (newSec) {
                             message: 'Text Here:'
                         }
                     ).then((response) => {
-                        newSec.secBody =+ response.newSecText + `\n`
+                        newBodyPart.type = 'text';
+                        newBodyPart.contents = `${response.newSecText}`;
+                        newSec.secBody.push(newBodyPart)
                         sectionEditor(newSec);
                     });
                     break;
@@ -133,7 +139,9 @@ function sectionEditor (newSec) {
                             message: 'Text Here:'
                         }
                     ).then((response) => {
-                        newSec.secBody =+ response.newSecImg + `\n`
+                        newBodyPart.type = 'img';
+                        newBodyPart.contents = `${response.newSecImg}`;
+                        newSec.secBody.push(newBodyPart);
                         sectionEditor(newSec);
                     });
                     break;
@@ -146,7 +154,9 @@ function sectionEditor (newSec) {
                             message: 'Text Here:'
                         }
                     ).then((response) => {
-                        newSec.secBody =+ response.newSecLink + `\n`
+                        newBodyPart.type = 'link';
+                        newBodyPart.contents = `${response.newSecLink}`;
+                        newSec.secBody.push(newBodyPart)
                         sectionEditor(newSec);
                     });
                     break;
@@ -159,17 +169,19 @@ function sectionEditor (newSec) {
                             message: 'Text Here:'
                         }
                     ).then((response) => {
-                        newSec.secBody =+ response.newSecBullet + `\n`
+                        newBodyPart.type = 'bullet';
+                        newBodyPart.contents = `${response.newSecBullet}`;
+                        newSec.secBody.push(newBodyPart)
                         sectionEditor(newSec);
                     });
                     break;
 
                 case 'Create a New Section':
-                    readMeObj.sections.push(newSec)
                     sectionLooper();
                     break;
                 default:
-                    console.log(readMeObj)
+                    console.log(readMeObj);
+                    createReadMe();
                     return;
               } 
          })

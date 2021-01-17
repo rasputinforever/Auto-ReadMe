@@ -1,1 +1,1 @@
-{"title":"Proj Title","introText":"Title Intro","sections":[{"secName":"Sec 1","secText":"Sec Text 1","secImgs":[],"secLinks":[]},{"secName":"sec 2","secText":"sec text 2","secImgs":[],"secLinks":[]}]}
+{"title":"Title","introText":"Intro","sections":[{"secName":"sec1","secBody":[{"type":"text","contents":"text"},{"type":"img","contents":"link.png"},{"type":"img","contents":"image.png"},{"type":"bullet","contents":"bullet 1"},{"type":"bullet","contents":"bullet 2"}]},{"secName":"sec2","secBody":[{"type":"text","contents":"some text here"}]}]}
