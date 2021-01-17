@@ -1,29 +1,18 @@
-// use node to create a ReadMe
-//Ask for these things
-// 1. Main Title
-// 2. Introduction
-// 3. How many additional sections
-    // for each additional...
-    // section name
-    // section text contents
-    // images
-    // links
+//MVP ToDo list
+    // upgrade the IMAGE and LINK queries to ask for alt text.
+    // all section items shoudl have "submit like this" text so the user knows, for ex, to put images in "image.PNG" format.
+        // then make sure the CREATE FILE knows how to handle alt text submissions
+    // refactor those CASE prompts
+    // more details for user that they can use the formatting tools for bold, italics, etc. 
+    // more comments
 
-//auto generation creates the ReadMe's
-    //text formats
-    //link formats
-    //image formats
-    //table of contents
+    // EDIT FILE
+    // edit file should create an array of each object in the MD based on line-break. The user can select the thing, then edit it. 
+        //is it possible for inquirer to dump the text to be edited?
+    // edit would be BETTER if the user can ADD sections!!! Maybe not sections, but individual objects, like img, text, bullets, links, etc. 
+    // edit text SHOULD deliver the formatting things (like #, *, etc)
 
-//All inputs go to an object. based on the object structure and object lables, the ReadMe is generated. 
-//Step 1: Inqurirer
-//Step 2: fs
-
-//Notes
-//ReadMe Generator SHOULD be able to EDIT an existing readme!
-
-//Working == first let's create the object and writing it directly onto a ReadMe. Don't worry about actual formatting of the ReadMe.
-
+    // final steps: break the script into individual files. 
 
 const fs = require('fs');
 const inquirer = require('inquirer');
