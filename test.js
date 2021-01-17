@@ -50,16 +50,38 @@ function createReadMe() {
 
     let readMeArr = [readMeTitle, readMeIntro];
 
+    //get sections here
+    readMeObj.sections.forEach(section => {
+        readMeArr = [...readMeArr, `## ${section.secName}`];
 
+        section.secBody.forEach(bodyEl => {
+            
+            switch (bodyEl.type) {
+                case 'text':
+                    readMeArr = [...readMeArr, `${bodyEl.contents}`];
+                    break;
+                case 'img':
+                    readMeArr = [...readMeArr, `![${bodyEl.contents}](${bodyEl.contents})`];
+                    break;
+                case 'link':
+                    readMeArr = [...readMeArr, `[${bodyEl.contents}](${bodyEl.contents})`];
+                    break;
+                case 'bullet':
+                    readMeArr = [...readMeArr, `* ${bodyEl.contents}`];
+                    break;
+                default:
+                    return;
+            }
+        })
+    })
 
-    readMeArr.forEach(sec => {
-        
-        
-        fs.appendFile('README.md', `${sec}  `, (err) => {
-            if (err) throw err;
-            console.log('The "data to append" was appended to file!');
-          });
-        });
+    let readMeStr = readMeArr.join(`
+`);
+
+    fs.appendFile('README.md', readMeStr, (err) => {
+        if (err) throw err;
+        console.log('The "data to append" was appended to file!');
+      });
     
 }
 
