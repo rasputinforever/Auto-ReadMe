@@ -6,6 +6,8 @@
     // more details for user that they can use the formatting tools for bold, italics, etc. 
     // more comments
 
+    // add "created by" section!
+
     // EDIT FILE
     // edit file should create an array of each object in the MD based on line-break. The user can select the thing, then edit it. 
         //is it possible for inquirer to dump the text to be edited?
@@ -222,6 +224,13 @@ function createReadMe() {
             }
         })
     })
+
+    // credits
+    readMeArr = [...readMeArr, `## Credits
+This README was created using AutoReadMe
+Created by: Erik Portillo, 2021
+Repo: [AutoReadMe Repository](https://github.com/rasputinforever/Auto-ReadMe)
+GitHub: [RasputinForever](https://github.com/rasputinforever)`];
 
     let readMeStr = readMeArr.join(`
 `);
