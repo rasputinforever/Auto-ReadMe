@@ -100,9 +100,7 @@ function sectionLooper() {
             message: "Would you like to add more sections?"
     }]        
        ).then((response) => {
-        if (response.loopCheck) {
             //build section object, then push it to sections array
-                       
             newSec = {
                 secName: response.secTitle,
                 secText: response.secText,
@@ -110,13 +108,22 @@ function sectionLooper() {
                 secLinks: []
             }
             readMeObj.sections.push(newSec) 
-            sectionLooper();
-        } else {
-           console.log(readMeObj)
-        }
-    })
+            //exits loop
+            if (response.loopCheck) {
+                sectionLooper();
+            } else {
+            console.log(readMeObj);
+            createReadMe();
+            }
+         })
 }
 
 function editReadMe() {
     console.log("Hello!")
+}
+
+function createReadMe() {
+    fs.writeFile('README.md', JSON.stringify(readMeObj), (err) =>
+      err ? console.error(err) : console.log('You actuall did it!')
+    );
 }

@@ -1,1 +1,1 @@
-# Auto-ReadMe
+{"title":"Proj Title","introText":"Title Intro","sections":[{"secName":"Sec 1","secText":"Sec Text 1","secImgs":[],"secLinks":[]},{"secName":"sec 2","secText":"sec text 2","secImgs":[],"secLinks":[]}]}
