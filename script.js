@@ -8,6 +8,10 @@
 
     // add "created by" section!
 
+    // better line-breaking in writeFile
+
+    // table of contents!
+
     // EDIT FILE
     // edit file should create an array of each object in the MD based on line-break. The user can select the thing, then edit it. 
         //is it possible for inquirer to dump the text to be edited?
@@ -15,6 +19,8 @@
     // edit text SHOULD deliver the formatting things (like #, *, etc)
 
     // final steps: break the script into individual files. 
+    // gitignore
+    // JSON thingy
 
 const fs = require('fs');
 const inquirer = require('inquirer');
@@ -23,6 +29,9 @@ let readMeObj = {
     title: '',
     introText: '',
     sections: [],
+    userName: '',
+    userGit: '',
+    userEmail: ''
 };
 
 inquirer
@@ -51,6 +60,21 @@ function newReadMe() {
             message: 'What will the title of your README be?'
         },
         {
+            name: 'userName',
+            type: 'input',
+            message: `Please enter the author's name:`
+        },
+        {
+            name: 'userGit',
+            type: 'input',
+            message: 'Please enter the author\'s git page:'
+        },
+        {
+            name: 'userEmail',
+            type: 'input',
+            message: 'Please enter the author\'s email:'
+        },
+        {
             name: 'introText',
             type: 'input',
             message: 'Please enter your Introductory Text:'
@@ -58,7 +82,9 @@ function newReadMe() {
     ])
     .then((response) => {
         readMeObj.title = response.title
-        readMeObj.introText = response.introText
+        readMeObj.userEmail = response.userEmail
+        readMeObj.userGit = response.userGit
+        readMeObj.userName = response.userName
         sectionLooper();
     })
 }
@@ -194,7 +220,8 @@ function createReadMe() {
 }
 
 function createReadMe() {
-    
+    const mdBreak = `
+`;    
     const readMeTitle = `# ${readMeObj.title}`
     const readMeIntro = `${readMeObj.introText}`
 
@@ -208,32 +235,30 @@ function createReadMe() {
             
             switch (bodyEl.type) {
                 case 'text':
-                    readMeArr = [...readMeArr, `${bodyEl.contents}`];
+                    readMeArr = [...readMeArr, `${bodyEl.contents}${mdBreak}`];
                     break;
                 case 'img':
-                    readMeArr = [...readMeArr, `![${bodyEl.contents}](${bodyEl.contents})`];
+                    readMeArr = [...readMeArr, `![${bodyEl.contents}](${bodyEl.contents})${mdBreak}`];
                     break;
                 case 'link':
-                    readMeArr = [...readMeArr, `[${bodyEl.contents}](${bodyEl.contents})`];
+                    readMeArr = [...readMeArr, `[${bodyEl.contents}](${bodyEl.contents})${mdBreak}`];
                     break;
                 case 'bullet':
-                    readMeArr = [...readMeArr, `* ${bodyEl.contents}`];
+                    readMeArr = [...readMeArr, `* ${bodyEl.contents}${mdBreak}`];
                     break;
                 default:
                     return;
             }
         })
     })
+    // user info
+    readMeArr = [...readMeArr, `## Project Credits & Contact${mdBreak}Created by: ${readMeObj.userName}${mdBreak}GitHub: ${readMeObj.userGit}${mdBreak}Email: ${readMeObj.userEmail}${mdBreak}`];
+    
 
     // credits
-    readMeArr = [...readMeArr, `## Credits
-This README was created using AutoReadMe
-Created by: Erik Portillo, 2021
-Repo: [AutoReadMe Repository](https://github.com/rasputinforever/Auto-ReadMe)
-GitHub: [RasputinForever](https://github.com/rasputinforever)`];
+    readMeArr = [...readMeArr, `### AutoReadMe${mdBreak}This README was created using AutoReadMe${mdBreak}Created by: Erik Portillo, 2021${mdBreak}Repo: [AutoReadMe Repository](https://github.com/rasputinforever/Auto-ReadMe)${mdBreak}GitHub: [RasputinForever](https://github.com/rasputinforever)${mdBreak}`];
 
-    let readMeStr = readMeArr.join(`
-`);
+    let readMeStr = readMeArr.join(`${mdBreak}`);
 
     fs.writeFile('README.md', readMeStr, (err) =>
         err ? console.error(err) : console.log('README.md successfully created!')
