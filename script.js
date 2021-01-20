@@ -171,7 +171,6 @@ function sectionEditor (newSec) {
                         newBodyPart.type = `${foundEl.selected}`;
                         newBodyPart.contents = `${response.newEl}`;
                         newSec.secBody.push(newBodyPart)
-                        console.log(newBodyPart)
                         sectionEditor(newSec);
                     });
                     break;
@@ -188,7 +187,6 @@ function editReadMe() {
 
 function createReadMe() {
     
-    console.log(readMeObj.sections);
     const mdBreak = `
 `;    
     const readMeTitle = `# ${readMeObj.title}`
@@ -196,10 +194,17 @@ function createReadMe() {
 
     let readMeArr = [readMeTitle, readMeIntro];
 
-    //get sections here
+    let tblContents = [];
+
+    //get sections here. Each new element is pushed to array. 
     readMeObj.sections.forEach(section => {
         readMeArr = [...readMeArr, `## ${section.secName}`];
 
+        // push to table of contents array, for later
+        
+        tblContents = [...tblContents, `- [${section.secName}](#${section.secName})${mdBreak}`];
+
+        //loop through each child element per section
         section.secBody.forEach(bodyEl => {
             
             switch (bodyEl.type) {
@@ -224,15 +229,19 @@ function createReadMe() {
         })
     })
 
-    // user info
-    readMeArr = [...readMeArr, `## Project Credits & Contact${mdBreak}Created by: ${readMeObj.userName}${mdBreak}GitHub: ${readMeObj.userGit}${mdBreak}Email: ${readMeObj.userEmail}${mdBreak}`];
-    
+    // table of contents
+    readMeArr.splice(1, 0, tblContents.join(''));   //colors =  ["red", "white", "blue"]
 
-    // credits
+    // user contact info
+    readMeArr = [...readMeArr, `## Project Credits & Contact${mdBreak}Created by: ${readMeObj.userName}${mdBreak}GitHub: ${readMeObj.userGit}${mdBreak}Email: ${readMeObj.userEmail}${mdBreak}`];    
+
+    // credits for AutoReadMe
     readMeArr = [...readMeArr, `### AutoReadMe${mdBreak}This README was created using AutoReadMe${mdBreak}Created by: Erik Portillo, 2021${mdBreak}Repo: [AutoReadMe Repository](https://github.com/rasputinforever/Auto-ReadMe)${mdBreak}GitHub: [RasputinForever](https://github.com/rasputinforever)${mdBreak}`];
 
+    // merge all arr to a single string
     let readMeStr = readMeArr.join(`${mdBreak}`);
 
+    // write to file!
     fs.writeFile('README.md', readMeStr, (err) =>
         err ? console.error(err) : console.log('README.md successfully created!')
     );
