@@ -1,12 +1,8 @@
 # test
-- [sec1](#sec1)
-- [sec2](#sec2)
-- [sec3](#sec3)
+- [sec](#sec)
 
 
-## sec1
-## sec2
-## sec3
+## sec
 ## Project Credits & Contact
 Created by: 
 GitHub: 

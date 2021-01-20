@@ -2,15 +2,8 @@
     // upgrade the IMAGE and LINK queries to ask for alt text.
     // all section items shoudl have "submit like this" text so the user knows, for ex, to put images in "image.PNG" format.
         // then make sure the CREATE FILE knows how to handle alt text submissions
-    // refactor those CASE prompts
     // more details for user that they can use the formatting tools for bold, italics, etc. 
     // more comments
-
-    // add "created by" section!
-
-    // better line-breaking in writeFile
-
-    // table of contents!
 
     // EDIT FILE
     // edit file should create an array of each object in the MD based on line-break. The user can select the thing, then edit it. 
@@ -20,10 +13,10 @@
 
     // final steps: break the script into individual files. 
     // gitignore
-    // JSON thingy
 
-const fs = require('fs');
+
 const inquirer = require('inquirer');
+const createReadMe = require('./writefile.js');
 
 let readMeObj = {
     title: '',
@@ -140,7 +133,8 @@ function sectionEditor (newSec) {
                     break;
                 
                 case 'Quit Making Sections...':
-                    createReadMe();
+                    
+                    createReadMe(readMeObj);
                     return;
 
                 case 'License/Badge':
@@ -155,7 +149,7 @@ function sectionEditor (newSec) {
                         {selected: "Header", message: `Header Text:`},
                         {selected: "Text", message: `Text:`},
                         {selected: "Image", message: `Image Link (eg: './image.png'):`},
-                        {selected: "Link", message: `Link RUL (eg: 'url.com/website'):`},
+                        {selected: "Link", message: `Link URL (eg: 'url.com/website'):`},
                         {selected: "Bullet", message: `Bullet Text:`}
                     ];
 
@@ -185,65 +179,3 @@ function editReadMe() {
 
 
 
-function createReadMe() {
-    
-    const mdBreak = `
-`;    
-    const readMeTitle = `# ${readMeObj.title}`
-    const readMeIntro = `${readMeObj.introText}`
-
-    let readMeArr = [readMeTitle, readMeIntro];
-
-    let tblContents = [];
-
-    //get sections here. Each new element is pushed to array. 
-    readMeObj.sections.forEach(section => {
-        readMeArr = [...readMeArr, `## ${section.secName}`];
-
-        // push to table of contents array, for later
-        
-        tblContents = [...tblContents, `- [${section.secName}](#${section.secName})${mdBreak}`];
-
-        //loop through each child element per section
-        section.secBody.forEach(bodyEl => {
-            
-            switch (bodyEl.type) {
-                case 'Header':
-                    readMeArr = [...readMeArr, `### ${bodyEl.contents}${mdBreak}`];
-                    break;
-                case 'Text':
-                    readMeArr = [...readMeArr, `${bodyEl.contents}${mdBreak}`];
-                    break;
-                case 'Img':
-                    readMeArr = [...readMeArr, `![${bodyEl.contents}](${bodyEl.contents})${mdBreak}`];
-                    break;
-                case 'Link':
-                    readMeArr = [...readMeArr, `[${bodyEl.contents}](${bodyEl.contents})${mdBreak}`];
-                    break;
-                case 'Bullet':
-                    readMeArr = [...readMeArr, `* ${bodyEl.contents}${mdBreak}`];
-                    break;
-                default:
-                    return;
-            }
-        })
-    })
-
-    // table of contents
-    readMeArr.splice(1, 0, tblContents.join(''));   //colors =  ["red", "white", "blue"]
-
-    // user contact info
-    readMeArr = [...readMeArr, `## Project Credits & Contact${mdBreak}Created by: ${readMeObj.userName}${mdBreak}GitHub: ${readMeObj.userGit}${mdBreak}Email: ${readMeObj.userEmail}${mdBreak}`];    
-
-    // credits for AutoReadMe
-    readMeArr = [...readMeArr, `### AutoReadMe${mdBreak}This README was created using AutoReadMe${mdBreak}Created by: Erik Portillo, 2021${mdBreak}Repo: [AutoReadMe Repository](https://github.com/rasputinforever/Auto-ReadMe)${mdBreak}GitHub: [RasputinForever](https://github.com/rasputinforever)${mdBreak}`];
-
-    // merge all arr to a single string
-    let readMeStr = readMeArr.join(`${mdBreak}`);
-
-    // write to file!
-    fs.writeFile('README.md', readMeStr, (err) =>
-        err ? console.error(err) : console.log('README.md successfully created!')
-    );
-    
-}
