@@ -85,6 +85,7 @@ function newReadMe() {
         readMeObj.userEmail = response.userEmail
         readMeObj.userGit = response.userGit
         readMeObj.userName = response.userName
+        readMeObj.introText = response.introText
         sectionLooper();
     })
 }
@@ -128,81 +129,52 @@ function sectionEditor (newSec) {
                 name: "newSecItem",
                 type: "list",
                 message: "Now, let's add something to this section:",
-                choices: ["Text", "Image", "Link", "Bullet", "Create a New Section", "Quit Making Sections..."]
+                choices: ["Header", "Text", "Image", "Link", "Bullet", "License/Badge", "Create a New Section", "Quit Making Sections..."]
             }    
         )
        .then((response) => {
             switch(response.newSecItem) {
-
-                //this can be consolidated into 3 cases, use variables for the four "types"
                 
-                case 'Text':
-                    inquirer.prompt(
-                        {
-                            name: 'newSecText',
-                            type: 'input',
-                            message: 'Text Here:'
-                        }
-                    ).then((response) => {
-                        newBodyPart.type = 'text';
-                        newBodyPart.contents = `${response.newSecText}`;
-                        newSec.secBody.push(newBodyPart)
-                        sectionEditor(newSec);
-                    });
-                    break;
-
-                case 'Image':
-                    inquirer.prompt(
-                        {
-                            name: 'newSecImg',
-                            type: 'input',
-                            message: 'Text Here:'
-                        }
-                    ).then((response) => {
-                        newBodyPart.type = 'img';
-                        newBodyPart.contents = `${response.newSecImg}`;
-                        newSec.secBody.push(newBodyPart);
-                        sectionEditor(newSec);
-                    });
-                    break;
-
-                case 'Link':
-                    inquirer.prompt(
-                        {
-                            name: 'newSecLink',
-                            type: 'input',
-                            message: 'Text Here:'
-                        }
-                    ).then((response) => {
-                        newBodyPart.type = 'link';
-                        newBodyPart.contents = `${response.newSecLink}`;
-                        newSec.secBody.push(newBodyPart)
-                        sectionEditor(newSec);
-                    });
-                    break;
-
-                case 'Bullet':
-                    inquirer.prompt(
-                        {
-                            name: 'newSecBullet',
-                            type: 'input',
-                            message: 'Text Here:'
-                        }
-                    ).then((response) => {
-                        newBodyPart.type = 'bullet';
-                        newBodyPart.contents = `${response.newSecBullet}`;
-                        newSec.secBody.push(newBodyPart)
-                        sectionEditor(newSec);
-                    });
-                    break;
-
                 case 'Create a New Section':
                     sectionLooper();
                     break;
-                default:
-                    console.log(readMeObj);
+                
+                case 'Quit Making Sections...':
                     createReadMe();
                     return;
+
+                case 'License/Badge':
+                    //this needs a unique function. Will offer a few options, each option requires various inputs.
+                    console.log("Pretend we put a license or badge in here")
+                    sectionEditor();
+                    break;
+
+                default:
+
+                    let mesOut = [
+                        {selected: "Header", message: `Header Text:`},
+                        {selected: "Text", message: `Text:`},
+                        {selected: "Image", message: `Image Link (eg: './image.png'):`},
+                        {selected: "Link", message: `Link RUL (eg: 'url.com/website'):`},
+                        {selected: "Bullet", message: `Bullet Text:`}
+                    ];
+
+                    let foundEl = mesOut.find(val => val.selected === response.newSecItem);
+
+                    inquirer.prompt(
+                        {
+                            name: 'newEl',
+                            type: 'input',
+                            message: foundEl.message
+                        }
+                    ).then((response) => {
+                        newBodyPart.type = `${foundEl.selected}`;
+                        newBodyPart.contents = `${response.newEl}`;
+                        newSec.secBody.push(newBodyPart)
+                        console.log(newBodyPart)
+                        sectionEditor(newSec);
+                    });
+                    break;
               } 
          })
 }
@@ -212,14 +184,11 @@ function editReadMe() {
     console.log("Under Construction!")
 }
 
-function createReadMe() {
-    console.log(readMeObj);
-    fs.writeFile('README.md', JSON.stringify(readMeObj), (err) =>
-      err ? console.error(err) : console.log('You actuall did it!')
-    );
-}
+
 
 function createReadMe() {
+    
+    console.log(readMeObj.sections);
     const mdBreak = `
 `;    
     const readMeTitle = `# ${readMeObj.title}`
@@ -234,16 +203,19 @@ function createReadMe() {
         section.secBody.forEach(bodyEl => {
             
             switch (bodyEl.type) {
-                case 'text':
+                case 'Header':
+                    readMeArr = [...readMeArr, `### ${bodyEl.contents}${mdBreak}`];
+                    break;
+                case 'Text':
                     readMeArr = [...readMeArr, `${bodyEl.contents}${mdBreak}`];
                     break;
-                case 'img':
+                case 'Img':
                     readMeArr = [...readMeArr, `![${bodyEl.contents}](${bodyEl.contents})${mdBreak}`];
                     break;
-                case 'link':
+                case 'Link':
                     readMeArr = [...readMeArr, `[${bodyEl.contents}](${bodyEl.contents})${mdBreak}`];
                     break;
-                case 'bullet':
+                case 'Bullet':
                     readMeArr = [...readMeArr, `* ${bodyEl.contents}${mdBreak}`];
                     break;
                 default:
@@ -251,6 +223,7 @@ function createReadMe() {
             }
         })
     })
+
     // user info
     readMeArr = [...readMeArr, `## Project Credits & Contact${mdBreak}Created by: ${readMeObj.userName}${mdBreak}GitHub: ${readMeObj.userGit}${mdBreak}Email: ${readMeObj.userEmail}${mdBreak}`];
     
