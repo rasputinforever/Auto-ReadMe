@@ -1,6 +1,7 @@
 // this module takes an object containing README data and converts it to a README.md file
 
 function createReadMe(readMeObj) {
+    console.log(readMeObj)
     const fs = require('fs');
 
     const mdBreak = `

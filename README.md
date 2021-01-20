@@ -1,18 +1,18 @@
 # test
 - [sec1](#sec1)
+- [sec2](#sec2)
 
-
+t
 ## sec1
-test
+### sec
 
+## sec2
 test
-
-### test
 
 ## Project Credits & Contact
-Created by: test
-GitHub: test
-Email: test
+Created by: t
+GitHub: e
+Email: s
 
 ### AutoReadMe
 This README was created using AutoReadMe
