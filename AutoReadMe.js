@@ -14,8 +14,10 @@
     // final steps: break the script into individual files. 
     // gitignore
 
-
+// npm
 const inquirer = require('inquirer');
+
+// module functions
 const createReadMe = require('./writefile.js');
 
 let readMeObj = {
@@ -126,52 +128,57 @@ function sectionEditor (newSec) {
             }    
         )
        .then((response) => {
-            switch(response.newSecItem) {
-                
-                case 'Create a New Section':
-                    sectionLooper();
-                    break;
-                
-                case 'Quit Making Sections...':
-                    
-                    createReadMe(readMeObj);
-                    return;
-
-                case 'License/Badge':
-                    //this needs a unique function. Will offer a few options, each option requires various inputs.
-                    console.log("Pretend we put a license or badge in here")
-                    sectionEditor();
-                    break;
-
-                default:
-
-                    let mesOut = [
-                        {selected: "Header", message: `Header Text:`},
-                        {selected: "Text", message: `Text:`},
-                        {selected: "Image", message: `Image Link (eg: './image.png'):`},
-                        {selected: "Link", message: `Link URL (eg: 'url.com/website'):`},
-                        {selected: "Bullet", message: `Bullet Text:`}
-                    ];
-
-                    let foundEl = mesOut.find(val => val.selected === response.newSecItem);
-
-                    inquirer.prompt(
-                        {
-                            name: 'newEl',
-                            type: 'input',
-                            message: foundEl.message
-                        }
-                    ).then((response) => {
-                        newBodyPart.type = `${foundEl.selected}`;
-                        newBodyPart.contents = `${response.newEl}`;
-                        newSec.secBody.push(newBodyPart)
-                        sectionEditor(newSec);
-                    });
-                    break;
-              } 
+                newElCase(response, newBodyPart, newSec);
          })
 }
 
+function newElCase(response, newBodyPart, newSec) {
+    
+    switch(response.newSecItem) {
+                
+        case 'Create a New Section':
+            sectionLooper();
+            break;
+        
+        // exits to write file
+        case 'Quit Making Sections...':
+            // inported function                    
+            createReadMe(readMeObj);
+            return;
+
+        case 'License/Badge':
+            //this needs a unique function. Will offer a few options, each option requires various inputs.
+            console.log("Pretend we put a license or badge in here")
+            sectionEditor(newSec);
+            break;
+
+        // all user options go here
+        default:
+            let mesOut = [
+                {selected: "Header", message: `Header Text:`},
+                {selected: "Text", message: `Text:`},
+                {selected: "Image", message: `Image Link (eg: './image.png'):`},
+                {selected: "Link", message: `Link URL (eg: 'url.com/website'):`},
+                {selected: "Bullet", message: `Bullet Text:`}
+            ];
+
+            let foundEl = mesOut.find(val => val.selected === response.newSecItem);
+
+            inquirer.prompt(
+                {
+                    name: 'newEl',
+                    type: 'input',
+                    message: foundEl.message
+                }
+            ).then((response) => {
+                newBodyPart.type = `${foundEl.selected}`;
+                newBodyPart.contents = `${response.newEl}`;
+                newSec.secBody.push(newBodyPart)
+                sectionEditor(newSec);
+            });
+            break;
+      } 
+}
 
 function editReadMe() {
     console.log("Under Construction!")
