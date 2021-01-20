@@ -18,8 +18,10 @@
 const inquirer = require('inquirer');
 
 // module functions
-const createReadMe = require('./writefile.js');
 const sectionLooper = require('./createsections.js');
+const mdTostr = require('./readfile');
+const replaceReadMe = require('./writefile');
+
 
 let readMeObj = {
     title: '',
@@ -42,7 +44,9 @@ inquirer
             console.log("Initiating NEW README...")
             newReadMe();
         } else {
-            editReadMe();
+            mdTostr().then(data => {
+                editReadMe(data)        
+            }) 
         }
         }    
     );
@@ -87,9 +91,34 @@ function newReadMe() {
 }
 
 
-function editReadMe() {
-    console.log("Under Construction!")
+function editReadMe(str) {
+   
+    let mdArr = str.split("\n")
+
+    inquirer.prompt({
+        name: 'editLine',
+        type: 'list',
+        message: 'Which line would you like to edit...',
+        choices: mdArr
+
+    }).then((response) =>{
+        let oldText = response.editLine;
+        console.log('Edit Text: ', oldText)
+        inquirer.prompt({
+            name: 'newtext',
+            type: 'input',
+            message: 'Enter your new text (tip: copy/paste old text for quick editing):'
+        }).then((newEdit) => {
+            const arrPos = mdArr.indexOf(oldText)
+            mdArr[arrPos] = newEdit.newtext;
+            console.log(mdArr);
+            let mdStr = mdArr.join(`\n`)
+            replaceReadMe(mdStr);
+
+        })
+    })
 }
+
 
 
 

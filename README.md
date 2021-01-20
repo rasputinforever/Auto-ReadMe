@@ -1,18 +1,14 @@
-# test
+New New Header
+
+
+
+### Table of Contents
 - [sec1](#sec1)
-- [sec2](#sec2)
-
-t
-## sec1
-### sec
-
-## sec2
-test
 
 ## Project Credits & Contact
-Created by: t
-GitHub: e
-Email: s
+Created by: 
+GitHub: 
+Email: 
 
 ### AutoReadMe
 This README was created using AutoReadMe

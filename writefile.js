@@ -1,21 +1,20 @@
 // this module takes an object containing README data and converts it to a README.md file
 
 function createReadMe(readMeObj) {
-    console.log(readMeObj)
     const fs = require('fs');
 
     const mdBreak = `
 `;    
-    const readMeTitle = `# ${readMeObj.title}`
-    const readMeIntro = `${readMeObj.introText}`
+    const readMeTitle = `# ${readMeObj.title}${mdBreak}`
+    const readMeIntro = `${readMeObj.introText}${mdBreak}`
 
     let readMeArr = [readMeTitle, readMeIntro];
 
-    let tblContents = [];
+    let tblContents = [`### Table of Contents${mdBreak}`];
 
     //get sections here. Each new element is pushed to array. 
     readMeObj.sections.forEach(section => {
-        readMeArr = [...readMeArr, `## ${section.secName}`];
+        readMeArr = [...readMeArr, `## ${section.secName}${mdBreak}`];
 
         // push to table of contents array, for later
         
@@ -47,7 +46,7 @@ function createReadMe(readMeObj) {
     })
 
     // table of contents
-    readMeArr.splice(1, 0, tblContents.join(''));   //colors =  ["red", "white", "blue"]
+    readMeArr.splice(2, 1, tblContents.join(''));   //colors =  ["red", "white", "blue"]
 
     // user contact info
     readMeArr = [...readMeArr, `## Project Credits & Contact${mdBreak}Created by: ${readMeObj.userName}${mdBreak}GitHub: ${readMeObj.userGit}${mdBreak}Email: ${readMeObj.userEmail}${mdBreak}`];    
@@ -60,10 +59,18 @@ function createReadMe(readMeObj) {
 
     // write to file!
     fs.writeFile('README.md', readMeStr, (err) =>
-        err ? console.error(err) : console.log('README.md successfully created!')
+        err ? console.error(err) : console.log('README.md successfully created!', readMeStr)
     );
     
 }
 
+function replaceReadMe(mdStr) {
+    const fs = require('fs');
+    fs.writeFile('README.md', mdStr, (err) =>
+        err ? console.error(err) : console.log('README.md successfully replaced!', mdStr)
+    );
+}
+
 //export
 module.exports = createReadMe;
+module.exports = replaceReadMe;
