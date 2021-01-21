@@ -40,6 +40,9 @@ function createReadMe(readMeObj) {
                 case 'Bullet':
                     readMeArr = [...readMeArr, `* ${bodyEl.contents}${mdBreak}`];
                     break;
+                case 'Link':
+                    readMeArr = [...readMeArr, `[${bodyEl.contents.substring(bodyEl.contents.indexOf(' ') + 1, bodyEl.contents.length)}](${bodyEl.contents.split(" ")[0]})${mdBreak}`];
+                break;
                 default:
                     return;
             }

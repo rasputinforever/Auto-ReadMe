@@ -1,8 +1,9 @@
 //MVP ToDo list
+    // CREATE FILE
+        // LICENSES
     // EDIT FILE
-    // edit would be BETTER if the user can ADD sections!!! Maybe not sections, but individual objects, like img, text, bullets, links, etc. 
+        // edit would be BETTER if the user can ADD sections!!! Maybe not sections, but individual objects, like img, text, bullets, links, etc. 
 
-    // final steps: break the script into individual files. 
     // gitignore
 
 // npm

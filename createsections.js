@@ -45,7 +45,7 @@ function sectionEditor (newSec, readMeObj) {
                 name: "newSecItem",
                 type: "list",
                 message: "Now, let's add something to this section:",
-                choices: ["Header", "Text", "Image", "Link", "Bullet", "License/Badge", "Create a New Section", "Finalize README..."]
+                choices: ["Header", "Text", "Image", "Link", "Bullet", "License", "Create a New Section", "Finalize README..."]
             }    
         )
        .then((response) => {
@@ -68,12 +68,6 @@ function newElCase(response, newBodyPart, newSec, readMeObj) {
             createReadMe(readMeObj);
             return;
 
-        case 'License/Badge':
-            //this needs a unique function. Will offer a few options, each option requires various inputs.
-            console.log("Pretend we put a license or badge in here")
-            sectionEditor(newSec, readMeObj);
-            break;
-
         // all user options go here
         default:
             // prompts associated with available options above
@@ -82,7 +76,8 @@ function newElCase(response, newBodyPart, newSec, readMeObj) {
                 {selected: "Text", message: `Please type out a block of text, utilizing any MD formatting you desire in-line (eg: *italics*, **bold**, ***bold & italic***):`},
                 {selected: "Image", message: `Please submit your Image's address and its alt text separated by a space (all text following initial space will be used as alt text). Example Submission: myImage.PNG Alt Text, Example Output: ![Alt Text](myImage.PNG)`},
                 {selected: "Link", message: `Please submit your URL's address and its alt text separated by a space (all text following initial space will be used as alt text). Example Submission: myPage.com Alt Text, Example Output: [Alt Text](myImage.PNG)`},
-                {selected: "Bullet", message: `Bullet Text:`}
+                {selected: "Bullet", message: `Bullet Text:`},
+                {selected: "License", message: `To Create a License please submit the shields.io link for your license followed by the name of your License, separated by a space. Example Submission: https://img.shields.io/github/license/myUser/myRepo GitHub, Example Output: ![GitHub](https://img.shields.io/github/license/myUser/myRepo)`}
             ];
 
             // sets prompt to what user selected
