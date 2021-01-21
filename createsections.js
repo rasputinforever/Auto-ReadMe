@@ -19,7 +19,7 @@ function sectionLooper(readMeObj) {
             {
                 name: "newSecTitle",
                 type: "input",
-                message: "Section Title:"
+                message: "Section Title (this will appear in Table of Contents):"
             }   
         )
        .then((response) => {
@@ -33,6 +33,7 @@ function sectionLooper(readMeObj) {
          })
 }
 
+// here we create new elements OR decide to create a new section OR exit the generator all together
 function sectionEditor (newSec, readMeObj) {
     let newBodyPart = {
         type: '',
@@ -44,7 +45,7 @@ function sectionEditor (newSec, readMeObj) {
                 name: "newSecItem",
                 type: "list",
                 message: "Now, let's add something to this section:",
-                choices: ["Header", "Text", "Image", "Link", "Bullet", "License/Badge", "Create a New Section", "Quit Making Sections..."]
+                choices: ["Header", "Text", "Image", "Link", "Bullet", "License/Badge", "Create a New Section", "Finalize README..."]
             }    
         )
        .then((response) => {
@@ -52,6 +53,7 @@ function sectionEditor (newSec, readMeObj) {
          })
 }
 
+// refractors all the various cases and todos based on those options...
 function newElCase(response, newBodyPart, newSec, readMeObj) {
     
     switch(response.newSecItem) {
@@ -61,7 +63,7 @@ function newElCase(response, newBodyPart, newSec, readMeObj) {
             break;
         
         // exits to write file
-        case 'Quit Making Sections...':
+        case 'Finalize README...':
             // inported function                    
             createReadMe(readMeObj);
             return;
@@ -74,16 +76,19 @@ function newElCase(response, newBodyPart, newSec, readMeObj) {
 
         // all user options go here
         default:
+            // prompts associated with available options above
             let mesOut = [
                 {selected: "Header", message: `Header Text:`},
-                {selected: "Text", message: `Text:`},
+                {selected: "Text", message: `Please type out a block of text, utilizing any MD formatting you desire in-line (eg: *italics*, **bold**, ***bold & italic***):`},
                 {selected: "Image", message: `Please submit your Image's address and its alt text separated by a space (all text following initial space will be used as alt text). Example Submission: myImage.PNG Alt Text, Example Output: ![Alt Text](myImage.PNG)`},
                 {selected: "Link", message: `Please submit your URL's address and its alt text separated by a space (all text following initial space will be used as alt text). Example Submission: myPage.com Alt Text, Example Output: [Alt Text](myImage.PNG)`},
                 {selected: "Bullet", message: `Bullet Text:`}
             ];
 
+            // sets prompt to what user selected
             let foundEl = mesOut.find(val => val.selected === response.newSecItem);
 
+            // prompts!
             inquirer.prompt(
                 {
                     name: 'newEl',
@@ -91,6 +96,7 @@ function newElCase(response, newBodyPart, newSec, readMeObj) {
                     message: foundEl.message
                 }
             ).then((response) => {
+                // loops back upon itself with newly created element in hand
                 newBodyPart.type = `${foundEl.selected}`;
                 newBodyPart.contents = `${response.newEl}`;
                 newSec.secBody.push(newBodyPart)
@@ -99,7 +105,6 @@ function newElCase(response, newBodyPart, newSec, readMeObj) {
             break;
       } 
 }
-
 
 //export
 module.exports = sectionLooper;

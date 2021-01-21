@@ -1,15 +1,6 @@
 //MVP ToDo list
-    // upgrade the IMAGE and LINK queries to ask for alt text.
-    // all section items shoudl have "submit like this" text so the user knows, for ex, to put images in "image.PNG" format.
-        // then make sure the CREATE FILE knows how to handle alt text submissions
-    // more details for user that they can use the formatting tools for bold, italics, etc. 
-    // more comments
-
     // EDIT FILE
-    // edit file should create an array of each object in the MD based on line-break. The user can select the thing, then edit it. 
-        //is it possible for inquirer to dump the text to be edited?
     // edit would be BETTER if the user can ADD sections!!! Maybe not sections, but individual objects, like img, text, bullets, links, etc. 
-    // edit text SHOULD deliver the formatting things (like #, *, etc)
 
     // final steps: break the script into individual files. 
     // gitignore
@@ -110,7 +101,7 @@ function editReadMe(str) {
         type: 'list',
         message: 'Which line would you like to edit...',
         choices: mdArr,
-        validate: (list) => {
+        validate: function (list) {
             console.log('Answer:', list);
             if (answer === "") {
                 return "Please select a non-empty line.";
@@ -123,12 +114,23 @@ function editReadMe(str) {
         inquirer.prompt({
             name: 'newtext',
             type: 'input',
-            message: 'Enter your new text (tip: copy/paste old text for quick editing & formatting):'
+            message: 'Enter replacement text. WARNING: Be sure to INCLUDE Markdown formatting (#, *, [](), etc). This Editor ONLY returns the literal text, it does NOT apply any formatting:'
         }).then((newEdit) => {
             const arrPos = mdArr.indexOf(oldText)
             mdArr[arrPos] = newEdit.newtext;
             let mdStr = mdArr.join(`\n`)
-            replaceReadMe(mdStr);
+            // ask if user wants to keep editing, loop back if TRUE
+            inquirer.prompt({
+                name: 'againChk',
+                type: 'confirm',
+                message: 'Continue Editing?'
+            }).then((response) => {
+                if (response.againChk) {
+                    editReadMe(mdStr);
+                } else {                        
+                    replaceReadMe(mdStr);
+                }
+            })
 
         })
     })

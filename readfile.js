@@ -1,3 +1,5 @@
+// simply reads and returns the file
+
 const fs = require('fs');
 const util = require('util');
 

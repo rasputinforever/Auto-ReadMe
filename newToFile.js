@@ -2,7 +2,8 @@
 
 function createReadMe(readMeObj) {
     const fs = require('fs');
-
+    
+    // this is the only "line break" I could get working on the MD file. EXACTLY as it is below!
     const mdBreak = `
 `;    
     const readMeTitle = `# ${readMeObj.title}${mdBreak}`
@@ -22,7 +23,7 @@ function createReadMe(readMeObj) {
 
         //loop through each child element per section
         section.secBody.forEach(bodyEl => {
-            
+            // set the formatting for the element based on what it is
             switch (bodyEl.type) {
                 case 'Header':
                     readMeArr = [...readMeArr, `### ${bodyEl.contents}${mdBreak}`];
@@ -30,8 +31,7 @@ function createReadMe(readMeObj) {
                 case 'Text':
                     readMeArr = [...readMeArr, `${bodyEl.contents}${mdBreak}`];
                     break;
-                case 'Image':
-                    
+                case 'Image':                    
                     readMeArr = [...readMeArr, `![${bodyEl.contents.substring(bodyEl.contents.indexOf(' ') + 1, bodyEl.contents.length)}](${bodyEl.contents.split(" ")[0]})${mdBreak}`];
                     break;
                 case 'Link':
