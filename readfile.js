@@ -7,12 +7,6 @@ function mdTostr() {
     return readFile('README.md', 'utf8');
 }
 
-
-
-
-
-
-
 //export
  module.exports = mdTostr;
 

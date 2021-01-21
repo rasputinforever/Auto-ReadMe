@@ -59,18 +59,11 @@ function createReadMe(readMeObj) {
 
     // write to file!
     fs.writeFile('README.md', readMeStr, (err) =>
-        err ? console.error(err) : console.log('README.md successfully created!', readMeStr)
+        err ? console.error(err) : console.log('README.md successfully created!\n', readMeStr)
     );
     
 }
 
-function replaceReadMe(mdStr) {
-    const fs = require('fs');
-    fs.writeFile('README.md', mdStr, (err) =>
-        err ? console.error(err) : console.log('README.md successfully replaced!', mdStr)
-    );
-}
 
 //export
 module.exports = createReadMe;
-module.exports = replaceReadMe;

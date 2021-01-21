@@ -2,7 +2,7 @@
 const inquirer = require('inquirer');
 
 // module functions
-const createReadMe = require('./writefile.js');
+const createReadMe = require('./newToFile.js');
 
 //creates an endless number of sections so long as user continues to say "yes"
 function sectionLooper(readMeObj) {

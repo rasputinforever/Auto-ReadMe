@@ -19,20 +19,13 @@ const inquirer = require('inquirer');
 
 // module functions
 const sectionLooper = require('./createsections.js');
-const mdTostr = require('./readfile');
-const replaceReadMe = require('./writefile');
+const mdTostr = require('./readFile');
+const replaceReadMe = require('./editToFile');
 
-
-let readMeObj = {
-    title: '',
-    introText: '',
-    sections: [],
-    userName: '',
-    userGit: '',
-    userEmail: ''
-};
-
-inquirer
+// Tool starts here
+function initAutoReadMe() {
+    // Introduction to Process. First query: CREATE or EDIT?
+    inquirer
     .prompt({
         name: "function",
         type: "list",
@@ -40,19 +33,33 @@ inquirer
         choices: ["Create New README.md", "Edit existing README.md"],
     })
     .then((response) => {
-        if (response.function === "Create New README.md") {
-            console.log("Initiating NEW README...")
-            newReadMe();
-        } else {
-            mdTostr().then(data => {
-                editReadMe(data)        
-            }) 
-        }
+            if (response.function === "Create New README.md") {
+                console.log("Initiating NEW README...")
+                newReadMe();
+            } else {
+                // this GETs the ReadMe as a string
+                mdTostr().then(data => {
+                    // this "then" ensures we read the file THEN go onto the next steps
+                    editReadMe(data)        
+                }) 
+            }
         }    
     );
+}
 
-
+// CREATE ReadMe starts here
 function newReadMe() {
+    // this object is where all input data goes. It gets passed all over.
+    let readMeObj = {
+        title: '',
+        introText: '',
+        sections: [],
+        userName: '',
+        userGit: '',
+        userEmail: ''
+    };
+
+    // required info about Author, Project, then goes to Section Builder
     inquirer.prompt([
         {
             name: 'title',
@@ -86,32 +93,40 @@ function newReadMe() {
         readMeObj.userGit = response.userGit
         readMeObj.userName = response.userName
         readMeObj.introText = response.introText
+
+        //this is the "section builder"
         sectionLooper(readMeObj);
     })
 }
 
-
+// EDIT starts here. 
 function editReadMe(str) {
-   
+   // we want to break the string into an array, splitting at each "line break" in the string
     let mdArr = str.split("\n")
 
+    // now select which line to edit. This could be better but this will do for now
     inquirer.prompt({
         name: 'editLine',
         type: 'list',
         message: 'Which line would you like to edit...',
-        choices: mdArr
-
+        choices: mdArr,
+        validate: (list) => {
+            console.log('Answer:', list);
+            if (answer === "") {
+                return "Please select a non-empty line.";
+            }
+                return true;
+            }
     }).then((response) =>{
+        // we want to keep old text so we know where to send new text. 
         let oldText = response.editLine;
-        console.log('Edit Text: ', oldText)
         inquirer.prompt({
             name: 'newtext',
             type: 'input',
-            message: 'Enter your new text (tip: copy/paste old text for quick editing):'
+            message: 'Enter your new text (tip: copy/paste old text for quick editing & formatting):'
         }).then((newEdit) => {
             const arrPos = mdArr.indexOf(oldText)
             mdArr[arrPos] = newEdit.newtext;
-            console.log(mdArr);
             let mdStr = mdArr.join(`\n`)
             replaceReadMe(mdStr);
 
@@ -119,6 +134,6 @@ function editReadMe(str) {
     })
 }
 
-
+initAutoReadMe();
 
 
