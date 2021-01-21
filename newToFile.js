@@ -30,11 +30,12 @@ function createReadMe(readMeObj) {
                 case 'Text':
                     readMeArr = [...readMeArr, `${bodyEl.contents}${mdBreak}`];
                     break;
-                case 'Img':
-                    readMeArr = [...readMeArr, `![${bodyEl.contents}](${bodyEl.contents})${mdBreak}`];
+                case 'Image':
+                    
+                    readMeArr = [...readMeArr, `![${bodyEl.contents.substring(bodyEl.contents.indexOf(' ') + 1, bodyEl.contents.length)}](${bodyEl.contents.split(" ")[0]})${mdBreak}`];
                     break;
                 case 'Link':
-                    readMeArr = [...readMeArr, `[${bodyEl.contents}](${bodyEl.contents})${mdBreak}`];
+                    readMeArr = [...readMeArr, `[${bodyEl.contents.substring(bodyEl.contents.indexOf(' ') + 1, bodyEl.contents.length)}](${bodyEl.contents.split(" ")[0]})${mdBreak}`];
                     break;
                 case 'Bullet':
                     readMeArr = [...readMeArr, `* ${bodyEl.contents}${mdBreak}`];

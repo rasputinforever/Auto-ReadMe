@@ -77,8 +77,8 @@ function newElCase(response, newBodyPart, newSec, readMeObj) {
             let mesOut = [
                 {selected: "Header", message: `Header Text:`},
                 {selected: "Text", message: `Text:`},
-                {selected: "Image", message: `Image Link (eg: './image.png'):`},
-                {selected: "Link", message: `Link URL (eg: 'url.com/website'):`},
+                {selected: "Image", message: `Please submit your Image's address and its alt text separated by a space (all text following initial space will be used as alt text). Example Submission: myImage.PNG Alt Text, Example Output: ![Alt Text](myImage.PNG)`},
+                {selected: "Link", message: `Please submit your URL's address and its alt text separated by a space (all text following initial space will be used as alt text). Example Submission: myPage.com Alt Text, Example Output: [Alt Text](myImage.PNG)`},
                 {selected: "Bullet", message: `Bullet Text:`}
             ];
 
