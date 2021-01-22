@@ -6,7 +6,6 @@ const createReadMe = require('./newToFile.js');
 
 //creates an endless number of sections so long as user continues to say "yes"
 function sectionLooper(readMeObj) {
-    console.log(readMeObj);
     console.log(`Adding new Section...`)
     //blank template for sections
     let newSec = {
