@@ -19,7 +19,7 @@ function createReadMe(readMeObj) {
 
         // push to table of contents array, for later
         
-        tblContents = [...tblContents, `- [${section.secName}](#${section.secName})${mdBreak}`];
+        tblContents = [...tblContents, `- [${section.secName}](#${section.secName.replace(/\s/g, "-")})${mdBreak}`];
 
         //loop through each child element per section
         section.secBody.forEach(bodyEl => {
@@ -53,10 +53,10 @@ function createReadMe(readMeObj) {
     readMeArr.splice(2, 1, tblContents.join(''));   //colors =  ["red", "white", "blue"]
 
     // user contact info
-    readMeArr = [...readMeArr, `## Project Credits & Contact${mdBreak}Created by: ${readMeObj.userName}${mdBreak}GitHub: ${readMeObj.userGit}${mdBreak}Email: ${readMeObj.userEmail}${mdBreak}`];    
+    readMeArr = [...readMeArr, `## Project Credits and Contact${mdBreak}Created by: ${readMeObj.userName}${mdBreak}GitHub: ${readMeObj.userGit}${mdBreak}Email: ${readMeObj.userEmail}${mdBreak}`];    
 
     // credits for AutoReadMe
-    readMeArr = [...readMeArr, `### AutoReadMe${mdBreak}This README was created using AutoReadMe${mdBreak}Created by: Erik Portillo, 2021${mdBreak}Repo: [AutoReadMe Repository](https://github.com/rasputinforever/Auto-ReadMe)${mdBreak}GitHub: [RasputinForever](https://github.com/rasputinforever)${mdBreak}`];
+    readMeArr = [...readMeArr, `### AutoReadMe${mdBreak}This README was created using AutoReadMe${mdBreak}${mdBreak}Created by: Erik Portillo, 2021${mdBreak}${mdBreak}Repo: [AutoReadMe Repository](https://github.com/rasputinforever/Auto-ReadMe)${mdBreak}${mdBreak}GitHub: [RasputinForever](https://github.com/rasputinforever)${mdBreak}${mdBreak}`];
 
     // merge all arr to a single string
     let readMeStr = readMeArr.join(`${mdBreak}`);

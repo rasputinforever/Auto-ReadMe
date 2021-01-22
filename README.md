@@ -5,7 +5,7 @@ Auto ReadMe is a helpful tool that generates a README.md file based on user inpu
 ##### Table of Contents
 - [User Experience](#User-Experience)
 - [How it Works](#How-it-Works)
-- [Project Credits & Contact](#Project-Credits-&-Contact)
+- [Project Credits & Contact](#Project-Credits-and-Contact)
 
 ## User Experience
 
@@ -54,7 +54,7 @@ fs, or "file system", is a library that allows the reading and writing of files 
 
 [fs](https://www.npmjs.com/package/fs)
 
-## Project Credits & Contact
+## Project Credits and Contact
 Created by: Erik Portillo
 GitHub: [RasputinForever](https://github.com/rasputinforever)
 Email: erik.justin.portillo@gmail.com
