@@ -11,9 +11,9 @@
 const inquirer = require('inquirer');
 
 // module functions
-const sectionLooper = require('./createsections.js');
-const mdTostr = require('./readFile');
-const replaceReadMe = require('./editToFile');
+const sectionLooper = require('./modules/createsections.js');
+const mdTostr = require('./modules/readFile');
+const replaceReadMe = require('./modules/editToFile');
 
 // Tool starts here
 function initAutoReadMe() {
