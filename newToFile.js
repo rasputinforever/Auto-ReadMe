@@ -40,9 +40,10 @@ function createReadMe(readMeObj) {
                 case 'Bullet':
                     readMeArr = [...readMeArr, `* ${bodyEl.contents}${mdBreak}`];
                     break;
-                case 'Link':
-                    readMeArr = [...readMeArr, `[${bodyEl.contents.substring(bodyEl.contents.indexOf(' ') + 1, bodyEl.contents.length)}](${bodyEl.contents.split(" ")[0]})${mdBreak}`];
-                break;
+                case 'License':
+                    // Licenses go right under the header
+                    readMeArr.splice(1, 0, `[${bodyEl.contents.substring(bodyEl.contents.indexOf(' ') + 1, bodyEl.contents.length)}](${bodyEl.contents.split(" ")[0]})${mdBreak}`);
+                    break;
                 default:
                     return;
             }
@@ -50,13 +51,13 @@ function createReadMe(readMeObj) {
     })
 
     // table of contents
-    readMeArr.splice(2, 1, tblContents.join(''));   //colors =  ["red", "white", "blue"]
+    readMeArr.splice(2, 1, tblContents.join(''));
 
     // user contact info
     readMeArr = [...readMeArr, `## Project Credits and Contact${mdBreak}Created by: ${readMeObj.userName}${mdBreak}GitHub: ${readMeObj.userGit}${mdBreak}Email: ${readMeObj.userEmail}${mdBreak}`];    
 
     // credits for AutoReadMe
-    readMeArr = [...readMeArr, `### AutoReadMe${mdBreak}This README was created using AutoReadMe${mdBreak}${mdBreak}Created by: Erik Portillo, 2021${mdBreak}${mdBreak}Repo: [AutoReadMe Repository](https://github.com/rasputinforever/Auto-ReadMe)${mdBreak}${mdBreak}GitHub: [RasputinForever](https://github.com/rasputinforever)${mdBreak}${mdBreak}`];
+    readMeArr = [...readMeArr, `#### About AutoReadMe${mdBreak}This README was created using AutoReadMe${mdBreak}${mdBreak}Created by: Erik Portillo, 2021${mdBreak}${mdBreak}Repo: [AutoReadMe Repository](https://github.com/rasputinforever/Auto-ReadMe)${mdBreak}${mdBreak}GitHub: [RasputinForever](https://github.com/rasputinforever)${mdBreak}${mdBreak}`];
 
     // merge all arr to a single string
     let readMeStr = readMeArr.join(`${mdBreak}`);

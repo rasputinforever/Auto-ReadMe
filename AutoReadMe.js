@@ -3,6 +3,7 @@
         // LICENSES
     // EDIT FILE
         // edit would be BETTER if the user can ADD sections!!! Maybe not sections, but individual objects, like img, text, bullets, links, etc. 
+        // validate for "null" lines
 
     // gitignore
 
@@ -21,7 +22,7 @@ function initAutoReadMe() {
     .prompt({
         name: "function",
         type: "list",
-        message: "Welcome to Auto-ReadMe! This tool helps build or edit a README.md file by walking through each section and section element in your README! What would you like to do?",
+        message: `Welcome to Auto-ReadMe! This tool helps build or edit a README.md file by walking through each section and section element in your README! What would you like to do?`,
         choices: ["Create New README.md", "Edit existing README.md"],
     })
     .then((response) => {
@@ -29,6 +30,7 @@ function initAutoReadMe() {
                 console.log("Initiating NEW README...")
                 newReadMe();
             } else {
+                console.log("Initiating EDIT README...")
                 // this GETs the ReadMe as a string
                 mdTostr().then(data => {
                     // this "then" ensures we read the file THEN go onto the next steps
@@ -101,14 +103,7 @@ function editReadMe(str) {
         name: 'editLine',
         type: 'list',
         message: 'Which line would you like to edit...',
-        choices: mdArr,
-        validate: function (list) {
-            console.log('Answer:', list);
-            if (answer === "") {
-                return "Please select a non-empty line.";
-            }
-                return true;
-            }
+        choices: mdArr
     }).then((response) =>{
         // we want to keep old text so we know where to send new text. 
         let oldText = response.editLine;

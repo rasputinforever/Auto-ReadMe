@@ -9,6 +9,8 @@ Auto ReadMe is a helpful tool that generates a README.md file based on user inpu
 
 ## User Experience
 
+![Video Explanation](https://drive.google.com/file/d/12gxWsAwSdwSstiy7NF2CUwkmEWOxYk67/view)
+
 ### Console Interactions
 
 To get started, the user loads AutoReadMe.js in the console. The user is then taken through a branching series of questions, first starting with:
