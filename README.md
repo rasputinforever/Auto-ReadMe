@@ -2,14 +2,10 @@
 
 Auto ReadMe is a helpful tool that generates a README.md file based on user inputs.
 
-### Table of Contents
-- [AutoReadMe](#AutoReadMe)
+##### Table of Contents
 - [User Experience](#User-Experience)
-- [User Experience](#User-Experience)
-- [User Experience](#User-Experience)
-- [test](#test)
-- [test](#test)
-
+- [How it Works](#How-it-Works)
+- [Project Credits & Contact](#Project-Credits-&-Contact)
 
 ## User Experience
 
@@ -63,7 +59,7 @@ Created by: Erik Portillo
 GitHub: [RasputinForever](https://github.com/rasputinforever)
 Email: erik.justin.portillo@gmail.com
 
-## AutoReadMe
+##### AutoReadMe
 This README was created using AutoReadMe
 Created by: Erik Portillo, 2021
 Repo: [AutoReadMe Repository](https://github.com/rasputinforever/Auto-ReadMe)
